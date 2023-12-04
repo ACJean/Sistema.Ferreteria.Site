@@ -1,0 +1,24 @@
+<div class="window">
+    <form class="window__container" id="FrmReporteVentas">
+        <div class="window__header">
+            <h5>Reporte de Ventas</h5>
+            <button class="window__close"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="window__body">
+            <div class="form-reporte">
+                <label class="label" for="ChkFiltrarFechas">Filtrar</label>
+                <input id="ChkFiltrarFechas" name="filtrarFechas" type="checkbox"/>
+                <label class="label" for="DatFechaInicio">Fecha Inicio</label>
+                <input id="DatFechaInicio" name="fechaInicio" type="date"/>
+                <label class="label" for="DatFechaFinal">Fecha Final</label>
+                <input id="DatFechaFinal" name="fechaFinal" type="date"/>
+            </div>
+            <div class="tabla-articulos">
+                <table id="TblVentas" class="display"></table>
+            </div>
+        </div>
+        <div class="window__footer">
+            <button id="BuscarVentas" type="submit">Buscar</button>
+        </div>
+    </form>
+</div>

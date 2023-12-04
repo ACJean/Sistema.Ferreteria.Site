@@ -22,7 +22,7 @@
                 <label class="label" for="TxtTamanio">Tamaño</label>
                 <input class="input" id="TxtTamanio" name="tamanio" type="text"/>
                 <label class="label" for="TxtPrecio">Precio</label>
-                <input class="input" id="TxtPrecio" name="precio" type="number" min="0.1" step=".1" required="true"/>
+                <input class="input" id="TxtPrecio" name="precio" type="number" min="0.1" step=".01" required="true"/>
                 <label class="label" for="TxtStock">Stock</label>
                 <input class="input" id="TxtStock" name="stock" type="number" min="0" step="1" required="true"/>
             </div>
@@ -36,8 +36,8 @@
         </div>
         <div class="window__footer">
             <button id="GuardarArticulo" type="submit">Guardar</button>
-            <button id="EliminarArticulo" type="submit" disabled>Eliminar</button>
-            <button id="AltaBajaArticulo" type="submit" disabled>Baja</button>
+            <button id="EliminarArticulo" type="button" disabled>Eliminar</button>
+            <button id="BajaArticulo" type="button" disabled>Baja</button>
             <button id="LimpiarArticulo" type="button">Limpiar</button>
         </div>
     </form>

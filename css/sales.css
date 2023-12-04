@@ -410,6 +410,15 @@ body {
     font-size: 10px;
 }
 
+.form-reporte {
+    padding: 16px;
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 10% 10% repeat(4, 17%);
+    justify-content: center;
+    align-items: center;
+}
+
 @media only screen and (max-width: 550px) {
 
     .sales {

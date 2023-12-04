@@ -3,6 +3,8 @@ const roleComponents = {
     User: renderizarLogin
 }
 
+let tableReporteVentas;
+
 $(async function () {
 
     let token = window.localStorage.getItem("token-site")
@@ -71,6 +73,10 @@ async function agregarItem(e) {
         return
     }
     let articulo = (await response.json()).datos
+    if (articulo.stock <= 0) {
+        alert('Ya no hay stock de este producto.')
+        return
+    }
     let cuenta = obtenerCuenta()
     let detalle = obtenerDetalle(cuenta, articulo.id)
     if (!detalle) {
@@ -325,19 +331,7 @@ async function moduloArticulo(event) {
     elementBody.append($(await component.text()))
     addEventCloseWindow(elementBody)
 
-    // let response = await getResourcesApi(ARTICULOS, {
-    //     method: "GET",
-    //     headers: {
-    //         Authorization: getAuthorization()
-    //     }
-    // })
-    // if (response.error) {
-    //     await renderizarLogin()
-    //     return
-    // }
-    // let articulos = (await response.json()).datos
     let table = $('#TblArticulos').DataTable({
-        //data: articulos,
         ajax: {
             url: ARTICULOS,
             type: 'GET',
@@ -391,7 +385,7 @@ async function moduloArticulo(event) {
             $('#TxtStock').val(articulo.stock)
 
             $('#EliminarArticulo').prop('disabled', false)
-            $('#AltaBajaArticulo').prop('disabled', false)
+            $('#BajaArticulo').prop('disabled', false)
 
             let fileInput = document.getElementById('InpImagenes')
             const dataTransfer = new DataTransfer();
@@ -405,11 +399,59 @@ async function moduloArticulo(event) {
     });
     $('#LimpiarArticulo').on('click', function () {
         limpiarCamposArticulo()
+        table.ajax.reload()
+    })
+    $('#EliminarArticulo').on('click', async function(event) {
+        await eliminarArticulo(event)
+        limpiarCamposArticulo()
+        table.ajax.reload()
+    })
+    $('#BajaArticulo').on('click', async function(event) {
+        await bajaArticulo(event)
+        limpiarCamposArticulo()
+        table.ajax.reload()
     })
     $('#FrmArticulo').on('submit', async function (event) {
         await guardarArticulo(event)
         table.ajax.reload()
     })
+}
+
+async function eliminarArticulo(event) {
+    let id = $('#HidId').val()
+    let response = await getResourcesApi(`${ELIMINAR_ARTICULO}/${id}`, {
+        method: "DELETE",
+        headers: {
+            Authorization: getAuthorization()
+        }
+    })
+    if (response.error) {
+        await renderizarLogin()
+        return
+    }
+    let data = await response.json()
+    alert(data.mensaje)
+
+    renderizarVentas()
+}
+
+async function bajaArticulo(event) {
+    let codigo = $('#TxtCodigo').val()
+    let response = await getResourcesApi(`${BAJA_ARTICULO}/${codigo}`, {
+        method: "PUT",
+        headers: {
+            Authorization: getAuthorization()
+        }
+    })
+    if (response.error) {
+        await renderizarLogin()
+        return
+    }
+    let data = await response.json()
+    if (!data.datos && response.status !== 200)
+        alert(data.mensaje)
+
+    renderizarVentas()
 }
 
 async function guardarArticulo(event) {
@@ -519,7 +561,7 @@ function limpiarCamposArticulo() {
     $("#InpImagenes").val('').change()
 
     $('#EliminarArticulo').prop('disabled', true)
-    $('#AltaBajaArticulo').prop('disabled', true)
+    $('#BajaArticulo').prop('disabled', true)
 }
 
 async function moduloReporte(event) {
@@ -531,6 +573,147 @@ async function moduloReporte(event) {
     let component = await getResources('reporte.html', { method: "GET" })
     elementBody.append($(await component.text()))
     addEventCloseWindow(elementBody)
+    $('#BtnReporteVentas').on('click', reporteVentas)
+    $('#BtnReporteArticulos').on('click', reporteArticulos)
+}
+
+async function reporteVentas(event) {
+    let elementBody = $('body')
+    let elementWindow = elementBody.find('.window')
+    if (elementWindow.length !== 0) {
+        $('.window__close').click()
+    }
+    let component = await getResources('reporteVentas.html', { method: "GET" })
+    elementBody.append($(await component.text()))
+    addEventCloseWindow(elementBody)
+
+    const date = new Date();
+    date.setDate(date.getDate() - 1);
+    let currentDate = date.toJSON().split('T')[0]
+    $('#DatFechaInicio').val(currentDate)
+    $('#DatFechaFinal').val(currentDate)
+
+    $('#FrmReporteVentas').on('submit', buscarVentas)
+}
+
+async function reporteArticulos(event) {
+    let elementBody = $('body')
+    let elementWindow = elementBody.find('.window')
+    if (elementWindow.length !== 0) {
+        $('.window__close').click()
+    }
+    let component = await getResources('reporteArticulos.html', { method: "GET" })
+    elementBody.append($(await component.text()))
+    addEventCloseWindow(elementBody)
+
+    $('#TblArticulos').DataTable({
+        dom: 'Blfrtip',
+        buttons: [
+            {
+                extend: 'pdf',
+                text: 'Exportar',
+                exportOptions: {
+                    modifier: {
+                        page: 'current'
+                    }
+                }
+            }
+        ],
+        ajax: {
+            url: REPORTE_ARTICULOS,
+            type: 'GET',
+            headers: {
+                Authorization: getAuthorization()
+            },
+            dataSrc: 'datos'
+        },
+        columns: [
+            {
+                title: 'Codigo',
+                data: 'codigo'
+            },
+            {
+                title: 'Nombre',
+                data: 'nombre'
+            },
+            {
+                title: 'Precio',
+                data: 'precio'
+            },
+            {
+                title: 'Stock',
+                data: 'stock'
+            },
+            {
+                title: 'Estado',
+                data: 'estadoString'
+            }
+        ]
+    })
+}
+
+async function buscarVentas(event) {
+    event.preventDefault()
+    const formData = new FormData(event.target)
+    let response = await getResourcesApi(CUENTAS, {
+        method: "POST",
+        headers: {
+            Authorization: getAuthorization(),
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            filtrarFechas: formData.get('filtrarFechas') === 'on',
+            fechaInicio: formData.get('fechaInicio'),
+            fechaFinal: formData.get('fechaFinal')
+        })
+    })
+    if (response.error) {
+        await renderizarLogin()
+        return
+    }
+    let data = await response.json()
+
+    if (tableReporteVentas instanceof jQuery.fn.dataTable.Api) {
+        tableReporteVentas.destroy()
+    }
+
+    tableReporteVentas = $('#TblVentas').DataTable({
+        dom: 'Blfrtip',
+        buttons: [
+            {
+                extend: 'pdf',
+                text: 'Exportar',
+                exportOptions: {
+                    modifier: {
+                        page: 'current'
+                    }
+                }
+            }
+        ],
+        data: data.datos,
+        columns: [
+            {
+                title: 'Cliente',
+                data: 'clienteCedula'
+            },
+            {
+                title: 'Fecha Emisión',
+                data: 'fechaEmision'
+            },
+            {
+                title: 'Subtotal',
+                data: 'subtotal'
+            },
+            {
+                title: 'Impuestos',
+                data: 'impuestos'
+            },
+            {
+                title: 'Total',
+                data: 'total'
+            }
+        ]
+    })
 }
 
 function decodeJWT(token) {
