@@ -58,6 +58,8 @@ async function renderizarVentas() {
 
     //Pago
     $('#Pagar').on('click', procesarPago)
+
+    $('#CancelarCuenta').on('click', cancelarCuenta)
 }
 
 async function agregarItem(e) {
@@ -308,6 +310,10 @@ async function procesarPago(event) {
     let data = await response.json()
     removeCheck()
     alert(data.mensaje)
+}
+
+async function cancelarCuenta(event) {
+    removeCheck()
 }
 
 async function moduloFunciones(event) {

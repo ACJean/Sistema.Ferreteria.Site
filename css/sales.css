@@ -209,6 +209,14 @@ body {
     background-color: #e6d737;
 }
 
+.controls__item--red {
+    background-color: #d66767;
+}
+
+.controls__item--red:hover {
+    background-color: #d68484;
+}
+
 .customer-functions {
     width: 32px;
     height: 32px;
