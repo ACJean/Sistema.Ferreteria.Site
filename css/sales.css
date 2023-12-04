@@ -26,6 +26,7 @@
 }
 
 body {
+    position: relative;
     margin: 0;
     padding: 0;
     height: 100vh;
@@ -80,6 +81,11 @@ body {
 }
 
 .items__element {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
     background-color: #fff;
     border: none;
     border-top: 4px solid #343c57;
@@ -291,9 +297,122 @@ body {
     border-bottom: 2px solid #505d8a;
 }
 
+.window {
+    width: 600px;
+    height: 50vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #bfbfbf;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.window__container {
+    height: 100%;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 57px auto 60px;
+}
+
+.window__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #e9e9e9;
+}
+
+.window__footer {
+    display: grid;
+    gap: 4px;
+    grid-auto-rows: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+    padding: 8px;
+    border-top: 1px solid #e9e9e9;
+}
+
+.window__header h5 {
+    padding: 0;
+    margin: 0;
+}
+
+.window__close {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 4px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background-color: #d66767;
+    color: #fff;
+    font-size: 15px;
+}
+
+.window__body {
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.form-cliente {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+}
+
+.currency::before {
+    content: '$';
+}
+
+.label {
+    font-size: 12px;
+}
+
+.input {
+    border: none;
+    background: none;
+    border-bottom: 2px solid #000;
+}
+
+.input:focus {
+    outline: none;
+    border-bottom: 2px solid #505d8a;
+}
+
+.funciones {
+    padding: 16px;
+    display: grid;
+    gap: 4px;
+    grid-auto-rows: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+    grid-template-rows: 5rem;
+}
+
+.form-articulo {
+    padding: 16px;
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 15% 30% 15% 30%;
+    justify-content: center;
+    align-items: center;
+}
+
+.tabla-articulos {
+    padding: 16px;
+    font-size: 10px;
+}
+
 @media only screen and (max-width: 550px) {
 
-    body {
+    .sales {
         grid-template-columns: auto;
     }
 

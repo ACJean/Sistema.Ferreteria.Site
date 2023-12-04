@@ -1,38 +1,11 @@
 <div class="sales">
     <main class="main">
-        <section class="items">
-            <button class="items__element">
-                <img src="" 
-                alt="Test" 
-                class="image">
-                <h5 class="text">Item 1</h5>
-            </button>
-            <button class="items__element">
-                <img src="" alt="Test" class="image">
-                <h5 class="text">Item 2</h5>
-            </button>
-            <button class="items__element">
-                <img src="" alt="Test" class="image">
-                <h5 class="text">Item 3</h5>
-            </button>
-            <button class="items__element">
-                <img src="" alt="Test" class="image">
-                <h5 class="text">Item 4</h5>
-            </button>
-            <button class="items__element">
-                <img src="" alt="Test" class="image">
-                <h5 class="text">Item 5</h5>
-            </button>
-            <button class="items__element">
-                <img src="" alt="Test" class="image">
-                <h5 class="text">Item 6</h5>
-            </button>
-        </section>
+        <section id="Articulos" class="items"></section>
         <section class="controls">
-            <button class="controls__item controls__item--orange">
+            <button id="Funciones" class="controls__item controls__item--orange">
                 Funciones
             </button>
-            <button class="controls__item controls__item--green">
+            <button id="Pagar" class="controls__item controls__item--green">
                 Pagar
             </button>
         </section>
@@ -43,111 +16,26 @@
                 <img src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png" alt="" class="image" width="32" height="32">
             </div>
             <div class="customer-data">
-                <h5 class="text">Jean Alava</h5>
-                <p class="text text--sm">1726410536</p>
+                <h5 id="NombreCliente" class="text"></h5>
+                <p id="CedulaCliente" class="text text--sm"></p>
             </div>
             <div class="center">
-                <button class="customer-functions"><i class="fa-solid fa-square-plus"></i></button>
+                <button id="Cliente" class="customer-functions"><i class="fa-solid fa-square-plus"></i></button>
             </div>
         </div>
-        <div class="details__list">
-            <div class="detail__item">
-                <i class="fa-solid fa-angle-right"></i>
-                <p class="text text--center">1</p>
-                <p class="text">Item 1</p>
-                <p class="text">$10.00</p>
-                <button class="btn btn--remove btn--32 btn--circle"><i class="fa-solid fa-circle-minus"></i></button>
-            </div>
-            <div class="detail__item">
-                <i class="fa-solid fa-angle-right"></i>
-                <p class="text text--center">2</p>
-                <p class="text">Item 2</p>
-                <p class="text">$20.00</p>
-                <button class="btn btn--remove btn--32 btn--circle"><i class="fa-solid fa-circle-minus"></i></button>
-            </div>
-            <div class="detail__item">
-                <i class="fa-solid fa-angle-right"></i>
-                <p class="text text--center">3</p>
-                <p class="text">Item 2</p>
-                <p class="text">$20.00</p>
-                <button class="btn btn--remove btn--32 btn--circle"><i class="fa-solid fa-circle-minus"></i></button>
-            </div>
-            <div class="detail__item">
-                <i class="fa-solid fa-angle-right"></i>
-                <p class="text text--center">4</p>
-                <p class="text">Item 2</p>
-                <p class="text">$20.00</p>
-                <button class="btn btn--remove btn--32 btn--circle"><i class="fa-solid fa-circle-minus"></i></button>
-            </div>
-            <div class="detail__item">
-                <i class="fa-solid fa-angle-right"></i>
-                <p class="text text--center">5</p>
-                <p class="text">Item 2</p>
-                <p class="text">$20.00</p>
-                <button class="btn btn--remove btn--32 btn--circle"><i class="fa-solid fa-circle-minus"></i></button>
-            </div>
-            <div class="detail__item">
-                <i class="fa-solid fa-angle-right"></i>
-                <p class="text text--center">6</p>
-                <p class="text">Item 2</p>
-                <p class="text">$20.00</p>
-                <button class="btn btn--remove btn--32 btn--circle"><i class="fa-solid fa-circle-minus"></i></button>
-            </div>
-            <div class="detail__item">
-                <i class="fa-solid fa-angle-right"></i>
-                <p class="text text--center">7</p>
-                <p class="text">Item 2</p>
-                <p class="text">$20.00</p>
-                <button class="btn btn--remove btn--32 btn--circle"><i class="fa-solid fa-circle-minus"></i></button>
-            </div>
-            <div class="detail__item">
-                <i class="fa-solid fa-angle-right"></i>
-                <p class="text text--center">8</p>
-                <p class="text">Item 2</p>
-                <p class="text">$20.00</p>
-                <button class="btn btn--remove btn--32 btn--circle"><i class="fa-solid fa-circle-minus"></i></button>
-            </div>
-            <div class="detail__item">
-                <i class="fa-solid fa-angle-right"></i>
-                <p class="text text--center">9</p>
-                <p class="text">Item 2</p>
-                <p class="text">$20.00</p>
-                <button class="btn btn--remove btn--32 btn--circle"><i class="fa-solid fa-circle-minus"></i></button>
-            </div>
-            <div class="detail__item">
-                <i class="fa-solid fa-angle-right"></i>
-                <p class="text text--center">10</p>
-                <p class="text">Item 2</p>
-                <p class="text">$20.00</p>
-                <button class="btn btn--remove btn--32 btn--circle"><i class="fa-solid fa-circle-minus"></i></button>
-            </div>
-            <div class="detail__item">
-                <i class="fa-solid fa-angle-right"></i>
-                <p class="text text--center">11</p>
-                <p class="text">Item 2</p>
-                <p class="text">$20.00</p>
-                <button class="btn btn--remove btn--32 btn--circle"><i class="fa-solid fa-circle-minus"></i></button>
-            </div>
-            <div class="detail__item">
-                <i class="fa-solid fa-angle-right"></i>
-                <p class="text text--center">12</p>
-                <p class="text">Item 2</p>
-                <p class="text">$20.00</p>
-                <button class="btn btn--remove btn--32 btn--circle"><i class="fa-solid fa-circle-minus"></i></button>
-            </div>
-        </div>
+        <div id="DetallesCuenta" class="details__list"></div>
         <div class="details__totals">
             <div class="details__totals-item">
                 <h5 class="text">Subtotal</h5>
-                <p class="text">$0.00</p>
+                <p id="Subtotal" class="text currency">0.00</p>
             </div>
             <div class="details__totals-item">
                 <h5 class="text">Tax</h5>
-                <p class="text">$0.00</p>
+                <p id="Impuestos" class="text currency">0.00</p>
             </div>
             <div class="details__totals-item">
                 <h5 class="text">Total</h5>
-                <p class="text">$0.00</p>
+                <p id="Total" class="text currency">0.00</p>
             </div>
         </div>
     </aside>

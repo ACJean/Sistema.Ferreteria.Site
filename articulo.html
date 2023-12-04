@@ -1,0 +1,44 @@
+<div class="window">
+    <form class="window__container" id="FrmArticulo">
+        <input id="HidCrear" name="crear" type="hidden" value="true">
+        <input id="HidId" name="id" type="hidden">
+        <input id="HidEstado" name="estado" type="hidden">
+        <div class="window__header">
+            <h5>Articulos</h5>
+            <button class="window__close"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="window__body">
+            <div class="form-articulo">
+                <label class="label" for="TxtCodigo">Codigo</label>
+                <input class="input" id="TxtCodigo" name="codigo" type="number" min="1" step="1" required="true"/>
+                <label class="label" for="TxtNombre">Nombre</label>
+                <input class="input" id="TxtNombre" name="nombre" type="text" required="true"/>
+                <label class="label" for="TxtMaterial">Material</label>
+                <input class="input" id="TxtMaterial" name="material" type="number" min="0" step="1"/>
+                <label class="label" for="TxtDurabilidad">Durabilidad</label>
+                <input class="input" id="TxtDurabilidad" name="durabilidad" type="text"/>
+                <label class="label" for="TxtPeso">Peso</label>
+                <input class="input" id="TxtPeso" name="peso" type="number" min="0.1" step=".1"/>
+                <label class="label" for="TxtTamanio">Tamaño</label>
+                <input class="input" id="TxtTamanio" name="tamanio" type="text"/>
+                <label class="label" for="TxtPrecio">Precio</label>
+                <input class="input" id="TxtPrecio" name="precio" type="number" min="0.1" step=".1" required="true"/>
+                <label class="label" for="TxtStock">Stock</label>
+                <input class="input" id="TxtStock" name="stock" type="number" min="0" step="1" required="true"/>
+            </div>
+            <div class="form-cliente">
+                <label class="label" for="InpImagenes">Seleccionar Imagenes</label>
+                <input id="InpImagenes" name="imagenes" type="file" accept="image/*" required="true" multiple>
+            </div>
+            <div class="tabla-articulos">
+                <table id="TblArticulos" class="display"></table>
+            </div>
+        </div>
+        <div class="window__footer">
+            <button id="GuardarArticulo" type="submit">Guardar</button>
+            <button id="EliminarArticulo" type="submit" disabled>Eliminar</button>
+            <button id="AltaBajaArticulo" type="submit" disabled>Baja</button>
+            <button id="LimpiarArticulo" type="button">Limpiar</button>
+        </div>
+    </form>
+</div>

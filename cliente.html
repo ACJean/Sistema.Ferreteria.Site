@@ -1,0 +1,30 @@
+<div class="window">
+    <form class="window__container" id="FrmCliente">
+        <input id="HidCrear" name="crear" type="hidden" value="true">
+        <input id="HidId" name="id" type="hidden">
+        <input id="HidEstado" name="estado" type="hidden">
+        <div class="window__header">
+            <h5>Cliente</h5>
+            <button class="window__close"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="window__body">
+            <div class="form-cliente">
+                <label class="label" for="TxtCedula">Cédula</label>
+                <input class="input" id="TxtCedula" name="cedula" type="text"/>
+                <label class="label" for="TxtNombre">Nombre</label>
+                <input class="input" id="TxtNombre" name="nombre" type="text"/>
+                <label class="label" for="TxtDireccion">Direccion</label>
+                <input class="input" id="TxtDireccion" name="direccion" type="text"/>
+                <label class="label" for="TxtTelefono">Teléfono</label>
+                <input class="input" id="TxtTelefono" name="telefono" type="text"/>
+                <label class="label" for="TxtCorreo">Correo</label>
+                <input class="input" id="TxtCorreo" name="correo" type="text"/>
+            </div>
+        </div>
+        <div class="window__footer">
+            <button id="AsignarCliente" type="submit" disabled>Asignar</button>
+            <button id="BuscarCliente" type="button">Buscar</button>
+            <button id="LimpiarCliente" type="button">Limpiar</button>
+        </div>
+    </form>
+</div>
