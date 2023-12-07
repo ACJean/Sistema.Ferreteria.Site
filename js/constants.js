@@ -1,4 +1,4 @@
-const URL_API = "http://localhost:5142"
+const URL_API = "https://sistema-ferreteria-1629d27ddf57.herokuapp.com"
 const AUTENTICAR = `${URL_API}/seguridad/autenticar`
 const ARTICULOS = `${URL_API}/articulos`
 const CREAR_ARTICULO = `${ARTICULOS}/crear`
@@ -12,4 +12,5 @@ const ACTUALIZAR_CLIENTE = `${CLIENTES}/actualizar`
 const ELIMINAR_CLIENTE = `${CLIENTES}/eliminar`
 const BAJA_CLIENTE = `${CLIENTES}/baja`
 const CUENTAS = `${URL_API}/cuentas`
+const CUENTAS_CLIENTE = `${URL_API}/cuentas`
 const PROCESAR_CUENTA = `${URL_API}/cuentas/procesar`

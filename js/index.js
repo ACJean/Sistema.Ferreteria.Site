@@ -1,6 +1,6 @@
 const roleComponents = {
     Admin: renderizarVentas,
-    User: renderizarLogin
+    User: renderizarUsuario
 }
 
 let tableReporteVentas;
@@ -16,6 +16,13 @@ $(async function () {
         await renderizarLogin()
     }
 });
+
+async function renderizarUsuario() {
+    await renderizar("usuario.html")
+    $('#BtnSalir').on('click', salir)
+    $('#BtnArticulosCliente').on('click', moduloArticuloCliente)
+    $('#BtnCompras').on('click', moduloComprasCliente)
+}
 
 async function renderizarLogin() {
     await renderizar("login.html")
@@ -149,6 +156,7 @@ async function autenticar(event) {
             })
     })
     let responseToken = await response.json();
+    console.log(responseToken)
     if (response.status === 401) {
         alert(responseToken.mensaje)
         return;
@@ -284,16 +292,20 @@ function renderizarDatosCliente(cuenta) {
 
 async function procesarPago(event) {
     let cuenta = obtenerCuenta()
+    let subtotal = cuenta.detalles.reduce((acumulador, current) => {
+        return acumulador + current.total
+    }, 0)
+    if (subtotal == 0) {
+        alert('No se puede cerrar la cuenta con totales en 0.')
+        return;
+    }
+
     cuenta.detalles.push({
         tipo: 1,
         articuloId: null,
         cantidad: 1,
         total: cuenta.total
     })
-    if (cuenta.total <= 0) {
-        alert('No se puede cerrar la cuenta con totales en 0.')
-        return;
-    }
 
     let response = await getResourcesApi(PROCESAR_CUENTA, {
         method: "POST",
@@ -325,6 +337,7 @@ async function moduloFunciones(event) {
     addEventCloseWindow(elementBody)
     $('#BtnArticulos').on('click', moduloArticulo)
     $('#BtnReportes').on('click', moduloReporte)
+    $('#BtnSalir').on('click', salir)
 }
 
 async function moduloArticulo(event) {
@@ -481,7 +494,8 @@ async function guardarArticulo(event) {
         alert('Debe de subir al menos 1 imagen.')
         return
     }
-    let ids = $('#InpImagenes').data('ids').replace('[', '').replace(']', '')
+    let dataIds = $('#InpImagenes').data('ids');
+    let ids = dataIds ? dataIds.replace('[', '').replace(']', '') : ""
     let arrIds = ids.split(',')
     for (let index = 0; index < files.length; index++) {
         const file = files[index];
@@ -564,6 +578,7 @@ function limpiarCamposArticulo() {
     $('#TxtTamanio').val('')
     $('#TxtPrecio').val('')
     $('#TxtStock').val('')
+    $("#InpImagenes").data('ids', '')
     $("#InpImagenes").val('').change()
 
     $('#EliminarArticulo').prop('disabled', true)
@@ -790,4 +805,98 @@ function removeCheck() {
     sessionStorage.removeItem('cuenta')
     let cuenta = obtenerCuenta()
     renderizarDetallesCuenta(cuenta)
+}
+
+async function salir() {
+    window.localStorage.removeItem("token-site")
+    await renderizarLogin()
+    $('.window__close').click()
+}
+
+async function moduloArticuloCliente(event) {
+    let elementBody = $('body')
+    let elementWindow = elementBody.find('.window')
+    if (elementWindow.length !== 0) {
+        $('.window__close').click()
+    }
+    let component = await getResources('articulo-cliente.html', { method: "GET" })
+    elementBody.append($(await component.text()))
+    addEventCloseWindow(elementBody)
+
+    $('#TblArticulos').DataTable({
+        ajax: {
+            url: ARTICULOS,
+            type: 'GET',
+            headers: {
+                Authorization: getAuthorization()
+            },
+            dataSrc: 'datos'
+        },
+        columns: [
+            {
+                title: 'Nombre',
+                data: 'nombre'
+            },
+            {
+                title: 'Precio',
+                data: 'precio'
+            },
+            {
+                title: 'Stock',
+                data: 'stock'
+            }
+        ]
+    })
+}
+
+async function moduloComprasCliente(event) {
+    let elementBody = $('body')
+    let elementWindow = elementBody.find('.window')
+    if (elementWindow.length !== 0) {
+        $('.window__close').click()
+    }
+    let component = await getResources('compras-usuario.html', { method: "GET" })
+    elementBody.append($(await component.text()))
+    addEventCloseWindow(elementBody)
+
+    $('#TblVentas').DataTable({
+        dom: 'Blfrtip',
+        buttons: [
+            {
+                extend: 'pdf',
+                text: 'Exportar',
+                exportOptions: {
+                    modifier: {
+                        page: 'current'
+                    }
+                }
+            }
+        ],
+        ajax: {
+            url: CUENTAS_CLIENTE,
+            type: 'GET',
+            headers: {
+                Authorization: getAuthorization()
+            },
+            dataSrc: 'datos'
+        },
+        columns: [
+            {
+                title: 'Fecha Emisión',
+                data: 'fechaEmision'
+            },
+            {
+                title: 'Subtotal',
+                data: 'subtotal'
+            },
+            {
+                title: 'Impuestos',
+                data: 'impuestos'
+            },
+            {
+                title: 'Total',
+                data: 'total'
+            }
+        ]
+    })
 }
