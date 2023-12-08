@@ -22,6 +22,7 @@ async function renderizarUsuario() {
     $('#BtnSalir').on('click', salir)
     $('#BtnArticulosCliente').on('click', moduloArticuloCliente)
     $('#BtnCompras').on('click', moduloComprasCliente)
+    $('#BtnDatosCliente').on('click', moduloClienteUsuario)
 }
 
 async function renderizarLogin() {
@@ -156,7 +157,6 @@ async function autenticar(event) {
             })
     })
     let responseToken = await response.json();
-    console.log(responseToken)
     if (response.status === 401) {
         alert(responseToken.mensaje)
         return;
@@ -899,4 +899,68 @@ async function moduloComprasCliente(event) {
             }
         ]
     })
+}
+
+async function moduloClienteUsuario() {
+    let elementBody = $('body')
+    let elementWindow = elementBody.find('.window')
+    if (elementWindow.length !== 0) {
+        $('.window__close').click()
+    }
+    let component = await getResources('cliente-usuario.html', { method: "GET" })
+    elementBody.append($(await component.text()))
+    addEventCloseWindow(elementBody)
+
+    let token = window.localStorage.getItem("token-site")
+    let tokenData = decodeJWT(token)
+    let cedula = tokenData.identificacion
+    let response = await getResourcesApi(`${CLIENTES}/${cedula}`, {
+        method: "GET",
+        headers: {
+            Authorization: getAuthorization()
+        }
+    })
+    if (response.error) {
+        await renderizarLogin()
+        return
+    }
+    let data = await response.json()
+    let cliente = data.datos
+    $('#HidId').val(cliente.id)
+    $('#HidEstado').val(cliente.estado)
+    $('#HidCedula').val(cliente.cedula)
+    $('#HidCorreo').val(cliente.correo)
+    $('#TxtNombre').val(cliente.nombre)
+    $('#TxtDireccion').val(cliente.direccion)
+    $('#TxtTelefono').val(cliente.telefono)
+
+    $('#FrmCliente').on('submit', actualizarCliente)
+}
+
+async function actualizarCliente(event) {
+    event.preventDefault()
+    const formData = new FormData(event.target)
+    let cliente = {
+        id: +formData.get('id'),
+        nombre: formData.get('nombre'),
+        cedula: formData.get('cedula'),
+        direccion: formData.get('direccion'),
+        telefono: formData.get('telefono'),
+        correo: formData.get('correo'),
+        estado: +formData.get('estado')
+    }
+    let response = await getResourcesApi(`${ACTUALIZAR_CLIENTE}/${cliente.cedula}`, {
+        method: "PUT",
+        headers: {
+            Authorization: getAuthorization(),
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(cliente)
+    })
+    if (response.error) {
+        await renderizarLogin()
+        return
+    }
+    let data = await response.json()
+    alert(data.mensaje)
 }

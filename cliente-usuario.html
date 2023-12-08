@@ -1,0 +1,25 @@
+<div class="window">
+    <form class="window__container" id="FrmCliente">
+        <input id="HidId" name="id" type="hidden">
+        <input id="HidEstado" name="estado" type="hidden">
+        <input id="HidCedula" name="cedula" type="hidden"/>
+        <input id="HidCorreo" name="correo" type="hidden"/>
+        <div class="window__header">
+            <h5>Cliente</h5>
+            <button class="window__close"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="window__body">
+            <div class="form-cliente">
+                <label class="label" for="TxtNombre">Nombre</label>
+                <input class="input" id="TxtNombre" name="nombre" type="text" required="true" autocomplete="false"/>
+                <label class="label" for="TxtDireccion">Direccion</label>
+                <input class="input" id="TxtDireccion" name="direccion" type="text" required="true" autocomplete="false"/>
+                <label class="label" for="TxtTelefono">Teléfono</label>
+                <input class="input" id="TxtTelefono" name="telefono" type="text" autocomplete="false"/>
+            </div>
+        </div>
+        <div class="window__footer">
+            <button id="BtnActualizarCliente" type="submit">Actualizar</button>
+        </div>
+    </form>
+</div>

@@ -446,26 +446,25 @@ body {
 }
 
 .btn-blue {
-    background-color: #037ffc;
-    color: #fff;
-    border: none;
+    border: 5px solid #037ffc;
+    color: #037ffc;
     border-radius: 4px;
 }
 
 .btn-blue:hover {
-    background-color: #4b94de;
+    border: 5px solid #4b94de;
+    color: #4b94de;
 }
 
 .btn-red {
-    background-color: #d13f3f;
-    color: #fff;
-    border: none;
+    border: 5px solid #d13f3f;
+    color: #d13f3f;
     border-radius: 4px;
 }
 
 .btn-red:hover {
-    background-color: #d66767;
-    color: #fff;
+    border: 5px solid #d66767;
+    color: #d66767;
 }
 
 @media only screen and (max-width: 550px) {
